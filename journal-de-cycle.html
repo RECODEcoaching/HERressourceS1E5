@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Journal de cycle · RECODE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --v:#6D28D9; --v2:#8b5cf6; --vl:#f3effd; --vb:#ddd3fb;
+  --ink:#111827; --mut:#6b7280; --line:#e5e7eb; --bg:#faf9fc; --card:#fff;
+  --ok:#047857; --okb:#ecfdf5; --warn:#b45309; --warnb:#fffbeb; --pink:#be185d; --pinkb:#fdf2f8;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;font-size:15px}
+.wrap{max-width:680px;margin:0 auto;padding:0 16px 48px}
+.hero{background:linear-gradient(160deg,#1b1430,#111827);color:#fff;padding:36px 20px 30px;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.45),transparent 70%);top:-140px;right:-100px}
+.hero .in{max-width:680px;margin:0 auto;position:relative}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#c4b5fd}
+.hero h1{font-size:28px;line-height:1.15;margin:8px 0 10px;font-weight:800}
+.hero p{margin:0;color:#d1d5db;max-width:520px}
+h2{font-size:19px;margin:0 0 4px;font-weight:800}
+.sub{color:var(--mut);margin:0 0 14px;font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:18px}
+.lbl{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--v)}
+.sig{display:grid;gap:10px;margin-top:12px}
+.sig div{border:1px solid var(--vb);background:var(--vl);border-radius:10px;padding:10px 12px;font-size:14px}
+.sig b{display:block}
+form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:480px){form .row{grid-template-columns:1fr}}
+label{display:block;font-size:13px;font-weight:600;margin:12px 0 6px}
+input[type=date],input[type=number],select,textarea{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+textarea{min-height:70px;resize:vertical}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg input{display:none}
+.seg label{margin:0;font-weight:500;border:1px solid var(--line);border-radius:999px;padding:7px 12px;cursor:pointer;font-size:13px;background:#fff}
+.seg input:checked+label{background:var(--v);border-color:var(--v);color:#fff}
+.chk{display:flex;align-items:flex-start;gap:8px;margin-top:12px;font-size:14px}
+.chk input{margin-top:3px;accent-color:var(--v);width:18px;height:18px}
+.range{display:flex;align-items:center;gap:10px}
+.range input{flex:1;accent-color:var(--v)}
+.range output{font-weight:700;min-width:28px;text-align:right}
+.btn{appearance:none;border:0;background:var(--v);color:#fff;font:inherit;font-weight:700;padding:12px 16px;border-radius:10px;cursor:pointer;width:100%;margin-top:16px}
+.btn.sec{background:#fff;color:var(--v);border:1px solid var(--vb)}
+.btn.sm{width:auto;padding:8px 12px;margin:0;font-size:13px}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+@media(max-width:480px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center}
+.stat .n{font-size:22px;font-weight:800}
+.stat .t{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em}
+.callout{border-radius:10px;padding:12px 14px;margin-top:10px;font-size:14px;border:1px solid}
+.callout .ct{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;display:block;margin-bottom:3px}
+.c-ok{background:var(--okb);border-color:#a7f3d0}.c-ok .ct{color:var(--ok)}
+.c-warn{background:var(--warnb);border-color:#fde68a}.c-warn .ct{color:var(--warn)}
+.c-info{background:var(--vl);border-color:var(--vb)}.c-info .ct{color:var(--v)}
+.c-pink{background:var(--pinkb);border-color:#fbcfe8}.c-pink .ct{color:var(--pink)}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);font-weight:700;padding:6px 4px;border-bottom:1px solid var(--line)}
+td{padding:8px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+td.x{text-align:right}
+.del{background:none;border:0;color:var(--mut);cursor:pointer;font-size:16px}
+.tag{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;padding:2px 7px;margin:1px 2px 1px 0}
+.t-v{background:var(--vl);color:var(--v)}.t-w{background:var(--warnb);color:var(--warn)}.t-p{background:var(--pinkb);color:var(--pink)}
+.empty{color:var(--mut);font-size:14px;margin-top:10px}
+.code{font-family:ui-monospace,monospace;font-size:12px;word-break:break-all;min-height:90px}
+.msg{font-size:13px;margin-top:8px;min-height:18px;color:var(--ok);font-weight:600}
+.refs{font-size:12px;color:var(--mut)}
+.refs li{margin-bottom:6px}
+.refs a{color:var(--v)}
+footer{text-align:center;color:var(--mut);font-size:13px;margin-top:28px}
+footer b{color:var(--v)}
+.scroll{overflow-x:auto}
+</style>
+</head>
+<body>
+
+<header class="hero"><div class="in">
+  <div class="eyebrow">On t'a pas appris ça à l'école · Saison 1 · Épisode 5</div>
+  <h1>Ton journal de cycle</h1>
+  <p>Ton cycle n'est pas un programme. C'est un indicateur. Ici tu notes <b>tes</b> données, cycle après cycle, pour voir ce qui est normal <b>pour toi</b>, et repérer quand ça change.</p>
+</div></header>
+
+<main class="wrap">
+
+<section class="card">
+  <div class="lbl">Les 3 signaux à regarder</div>
+  <div class="sig">
+    <div><b>1 · La durée et la régularité</b>Un cycle entre 24 et 38 jours, c'est dans la norme. Régulier, ça veut dire à 4 jours près, pas au jour près.</div>
+    <div><b>2 · L'abondance</b>Des règles abondantes, c'est des règles qui te gênent dans ta vie. Pas un nombre de millilitres.</div>
+    <div><b>3 · La douleur</b>Une douleur qui te fait rater ou modifier tes séances, ça n'est pas « normal ». Ça se traite.</div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Ajouter un cycle</h2>
+  <p class="sub">À remplir à chaque début de règles (le 1er jour de saignement = jour 1).</p>
+  <form id="f">
+    <div class="row">
+      <div><label for="start">1er jour des règles</label><input type="date" id="start" required></div>
+      <div><label for="days">Durée des règles (jours)</label><input type="number" id="days" min="1" max="30" inputmode="numeric" placeholder="ex : 5"></div>
+    </div>
+
+    <label>L'abondance t'a gênée ?</label>
+    <div class="seg">
+      <input type="radio" name="gene" id="g0" value="0" checked><label for="g0">Non</label>
+      <input type="radio" name="gene" id="g1" value="1"><label for="g1">Un peu</label>
+      <input type="radio" name="gene" id="g2" value="2"><label for="g2">Oui, ça m'a limitée</label>
+    </div>
+
+    <label for="pain">Douleur la plus forte (0 à 10)</label>
+    <div class="range"><input type="range" id="pain" min="0" max="10" value="0"><output id="painv">0</output></div>
+
+    <div class="chk"><input type="checkbox" id="seance"><label for="seance" style="margin:0;font-weight:500">La douleur ou les symptômes m'ont fait rater ou modifier une séance</label></div>
+    <div class="chk"><input type="checkbox" id="envies"><label for="envies" style="margin:0;font-weight:500">Plus de faim ou d'envies (sucré, grignotage) les jours avant les règles</label></div>
+
+    <label for="note">Notes libres (fatigue, sommeil, stress, séance…)</label>
+    <textarea id="note" placeholder="Optionnel"></textarea>
+
+    <button class="btn" type="button" id="add">Enregistrer ce cycle</button>
+    <div class="msg" id="addmsg"></div>
+  </form>
+</section>
+
+<section class="card">
+  <h2>Ce que disent tes données</h2>
+  <label for="age" style="margin-top:6px">Ta tranche d'âge (le repère de régularité en dépend)</label>
+  <select id="age">
+    <option value="18">18 – 25 ans</option>
+    <option value="26" selected>26 – 41 ans</option>
+    <option value="42">42 – 45 ans</option>
+  </select>
+  <div id="stats"></div>
+  <div id="flags"></div>
+</section>
+
+<section class="card">
+  <h2>Historique</h2>
+  <div id="list"></div>
+</section>
+
+<section class="card">
+  <h2>Sauvegarder / restaurer</h2>
+  <p class="sub">Ton journal n'est enregistré que sur cet appareil. Pour ne rien perdre, copie ton code de sauvegarde dans une note (« Journal de cycle ») après chaque saisie. Pour le récupérer, colle-le ici et restaure.</p>
+  <div class="btns">
+    <button class="btn" type="button" id="save">Copier ma sauvegarde</button>
+    <button class="btn sec" type="button" id="share">Envoyer vers Notes</button>
+  </div>
+  <label for="code">Code de sauvegarde</label>
+  <textarea id="code" class="code" placeholder="Colle ici ton code RECODE-CYCLE… pour restaurer"></textarea>
+  <button class="btn sec" type="button" id="restore">Restaurer depuis ce code</button>
+  <div class="msg" id="msg"></div>
+</section>
+
+<section class="card">
+  <div class="callout c-info"><span class="ct">À savoir</span>Ce journal est un outil de suivi, pas un diagnostic. Un profil qui sort des repères est un signal à montrer à un professionnel de santé, pas une réponse en soi. Et un cycle régulier ne prouve pas à lui seul que tu ovules.</div>
+  <div class="lbl" style="margin-top:16px">Sources</div>
+  <ol class="refs">
+    <li>Munro MG, Critchley HOD, Fraser IS. The two FIGO systems for normal and abnormal uterine bleeding symptoms… 2018 revisions. <i>Int J Gynaecol Obstet</i>. 2018;143(3):393-408. <a href="https://doi.org/10.1002/ijgo.12666" target="_blank" rel="noopener">doi:10.1002/ijgo.12666</a> : durée 24-38 j, régularité (écart ≤ 9/7/9 j selon l'âge, soit ±4 j), règles ≤ 8 j, abondance définie par la gêne, vérification du fer.</li>
+    <li>ACOG Committee Opinion No. 651. <i>Obstet Gynecol</i>. 2015;126(6):e143-e146. <a href="https://doi.org/10.1097/AOG.0000000000001215" target="_blank" rel="noopener">doi:10.1097/AOG.0000000000001215</a> : le cycle comme signe vital (avis portant sur les adolescentes).</li>
+    <li>Bruinvels G et al. <i>Br J Sports Med</i>. 2021;55(8):438-443. <a href="https://doi.org/10.1136/bjsports-2020-102792" target="_blank" rel="noopener">doi:10.1136/bjsports-2020-102792</a> : plus de symptômes, plus de séances ratées ou modifiées.</li>
+    <li>Burnett M. Guideline No. 345: Primary Dysmenorrhea. <i>J Obstet Gynaecol Can</i>. 2025;47(5):102840. <a href="https://doi.org/10.1016/j.jogc.2025.102840" target="_blank" rel="noopener">doi:10.1016/j.jogc.2025.102840</a> : la douleur des règles est souvent banalisée, et elle se traite.</li>
+  </ol>
+</section>
+
+<footer>RECODE · <b>@indianaafit</b></footer>
+</main>
+
+<script>
+(function(){
+  var KEY='recode_cycle_v1';
+  var state={age:'26',cycles:[]};
+  function load(){try{var s=localStorage.getItem(KEY);if(s){var d=JSON.parse(s);if(d&&Array.isArray(d.cycles))state=d;}}catch(e){}}
+  function persist(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+  function $(id){return document.getElementById(id)}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function fmt(d){var p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0].slice(2)}
+  function dayDiff(a,b){return Math.round((Date.parse(b+'T12:00:00')-Date.parse(a+'T12:00:00'))/864e5)}
+  function sorted(){return state.cycles.slice().sort(function(a,b){return a.start<b.start?-1:1})}
+  function lengths(){var s=sorted(),out=[];for(var i=1;i<s.length;i++)out.push({from:s[i-1].start,len:dayDiff(s[i-1].start,s[i].start)});return out}
+  function limit(){return state.age==='26'?7:9}
+
+  function render(){
+    $('age').value=state.age;
+    var s=sorted(), L=lengths(), lens=L.map(function(x){return x.len});
+    // stats
+    var h='';
+    if(lens.length){
+      var avg=Math.round(lens.reduce(function(a,b){return a+b},0)/lens.length*10)/10;
+      var mn=Math.min.apply(null,lens), mx=Math.max.apply(null,lens);
+      h='<div class="stats">'+
+        '<div class="stat"><div class="n">'+lens.length+'</div><div class="t">cycles mesurés</div></div>'+
+        '<div class="stat"><div class="n">'+avg+'</div><div class="t">durée moyenne (j)</div></div>'+
+        '<div class="stat"><div class="n">'+mn+'–'+mx+'</div><div class="t">plus court – plus long</div></div>'+
+        '<div class="stat"><div class="n">'+(mx-mn)+'</div><div class="t">écart (j)</div></div></div>';
+    }
+    $('stats').innerHTML=h;
+
+    // flags
+    var f=[];
+    if(s.length<2){
+      f.push('<div class="callout c-info"><span class="ct">Pour commencer</span>Il faut au moins deux débuts de règles pour mesurer un cycle. Plus tu notes de cycles, plus ta référence personnelle devient fiable.</div>');
+    }else{
+      var out=L.filter(function(x){return x.len<24||x.len>38});
+      if(out.length){
+        f.push('<div class="callout c-warn"><span class="ct">Durée</span>'+out.length+' cycle'+(out.length>1?'s':'')+' en dehors de 24-38 jours ('+out.map(function(x){return x.len+' j'}).join(', ')+'). Si ça se répète, c’est un signal à montrer à un professionnel de santé.</div>');
+      }else{
+        f.push('<div class="callout c-ok"><span class="ct">Durée</span>Tous tes cycles mesurés sont entre 24 et 38 jours.</div>');
+      }
+      if(lens.length>=3){
+        var v=lens.slice().sort(function(a,b){return a-b});
+        var med=v[Math.floor(v.length/2)];
+        // on écarte le cycle le plus éloigné de ta médiane : un cycle isolé ne fait pas une irrégularité
+        var far=0,fi=0;v.forEach(function(x,i){if(Math.abs(x-med)>far){far=Math.abs(x-med);fi=i}});
+        var rest=v.filter(function(_,i){return i!==fi});
+        var spread=Math.max.apply(null,rest)-Math.min.apply(null,rest);
+        if(spread>limit()){
+          f.push('<div class="callout c-warn"><span class="ct">Régularité</span>Même en mettant de côté ton cycle le plus inhabituel, l’écart entre tes cycles est de '+spread+' jours (repère pour ton âge : '+limit()+' jours max). À surveiller, et à montrer si ça continue.</div>');
+        }else{
+          f.push('<div class="callout c-ok"><span class="ct">Régularité</span>Hors cycle isolé, ton écart est de '+spread+' jours : dans le repère de ton âge ('+limit()+' jours max).</div>');
+        }
+      }else{
+        f.push('<div class="callout c-info"><span class="ct">Régularité</span>Note encore '+(3-lens.length)+' cycle'+(3-lens.length>1?'s':'')+' pour juger ta régularité. Un cycle isolé plus long ou plus court ne suffit pas.</div>');
+      }
+    }
+    var longR=state.cycles.filter(function(c){return c.days>8});
+    if(longR.length) f.push('<div class="callout c-warn"><span class="ct">Durée des règles</span>'+longR.length+' fois plus de 8 jours de règles. C’est ce que FIGO classe comme « prolongé » : à signaler à ton médecin.</div>');
+    var gene=state.cycles.filter(function(c){return c.gene==2});
+    if(gene.length) f.push('<div class="callout c-pink"><span class="ct">Abondance</span>Tu as noté '+gene.length+' fois que l’abondance t’a limitée. C’est la définition même des règles abondantes. Les recommandations gynécologiques : faire vérifier ton fer. Parles-en à ton médecin.</div>');
+    var seance=state.cycles.filter(function(c){return c.seance});
+    if(seance.length) f.push('<div class="callout c-pink"><span class="ct">Douleur</span>'+seance.length+' cycle'+(seance.length>1?'s':'')+' avec au moins une séance ratée ou modifiée. Une douleur qui te limite, ça se traite : montre-la à un médecin.</div>');
+    var env=state.cycles.filter(function(c){return c.envies});
+    if(state.cycles.length>=2&&env.length) f.push('<div class="callout c-info"><span class="ct">Faim et envies</span>Tu as noté plus de faim ou d’envies avant tes règles sur '+env.length+' cycle'+(env.length>1?'s':'')+' sur '+state.cycles.length+'. Ce n’est pas le cas de tout le monde : si c’est ton schéma, c’est une info utile pour ajuster ta nutrition à ce moment-là.</div>');
+    $('flags').innerHTML=f.join('');
+
+    // list
+    if(!s.length){$('list').innerHTML='<p class="empty">Aucun cycle noté pour l’instant.</p>';return}
+    var lenBy={};L.forEach(function(x){lenBy[x.from]=x.len});
+    var rows=s.slice().reverse().map(function(c){
+      var tags='';
+      if(c.gene==2)tags+='<span class="tag t-p">abondance gênante</span>';else if(c.gene==1)tags+='<span class="tag t-v">un peu gênante</span>';
+      if(c.seance)tags+='<span class="tag t-p">séance impactée</span>';
+      if(c.envies)tags+='<span class="tag t-v">envies ↑</span>';
+      var len=lenBy[c.start];
+      return '<tr><td><b>'+fmt(c.start)+'</b>'+(c.note?'<div style="color:var(--mut);font-size:12px">'+esc(c.note)+'</div>':'')+'</td>'+
+        '<td>'+(len!=null?(len<24||len>38?'<span class="tag t-w">'+len+' j</span>':len+' j'):'<span style="color:var(--mut)">en cours</span>')+'</td>'+
+        '<td>'+(c.days?c.days+' j':'–')+'</td><td>'+c.pain+'/10</td><td>'+tags+'</td>'+
+        '<td class="x"><button class="del" data-id="'+c.id+'" aria-label="Supprimer">✕</button></td></tr>';
+    }).join('');
+    $('list').innerHTML='<div class="scroll"><table><thead><tr><th>Début</th><th>Cycle</th><th>Règles</th><th>Douleur</th><th>Notes</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+  }
+
+  // form
+  $('pain').addEventListener('input',function(){$('painv').textContent=this.value});
+  function addMsg(t,err){var m=$('addmsg');m.style.color=err?'#b91c1c':'';m.textContent=t;clearTimeout(addMsg.t);addMsg.t=setTimeout(function(){m.textContent=''},6000)}
+  $('f').addEventListener('submit',function(e){e.preventDefault();addCycle()});
+  $('add').addEventListener('click',addCycle);
+  function addCycle(){
+    var start=$('start').value;
+    if(!start){addMsg('Indique le 1er jour de tes règles.',true);$('start').focus();return}
+    var g=document.querySelector('input[name=gene]:checked');
+    state.cycles=state.cycles.filter(function(c){return c.start!==start});
+    state.cycles.push({id:Date.now().toString(36),start:start,days:parseInt($('days').value,10)||null,
+      gene:g?parseInt(g.value,10):0,pain:parseInt($('pain').value,10)||0,
+      seance:$('seance').checked,envies:$('envies').checked,note:$('note').value.trim()});
+    persist();render();
+    $('start').value='';$('days').value='';$('g0').checked=true;$('pain').value=0;$('painv').textContent='0';
+    $('seance').checked=false;$('envies').checked=false;$('note').value='';
+    addMsg('Cycle du '+fmt(start)+' enregistré. Pense à copier ta sauvegarde dans tes notes.');
+  }
+  $('list').addEventListener('click',function(e){
+    var b=e.target.closest('.del');if(!b)return;
+    state.cycles=state.cycles.filter(function(c){return c.id!==b.dataset.id});persist();render();
+  });
+  $('age').addEventListener('change',function(){state.age=this.value;persist();render()});
+
+  // save / restore
+  function encode(){var j=JSON.stringify(state);return 'RECODE-CYCLE:'+btoa(unescape(encodeURIComponent(j)))}
+  function flash(t,err){var m=$('msg');m.style.color=err?'#b91c1c':'';m.textContent=t;clearTimeout(flash.t);flash.t=setTimeout(function(){m.textContent=''},5000)}
+  function copy(txt){
+    if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(txt)}
+    return new Promise(function(res,rej){try{var ta=$('code');ta.value=txt;ta.select();document.execCommand('copy');res()}catch(e){rej(e)}});
+  }
+  $('save').addEventListener('click',function(){
+    var c=encode();$('code').value=c;
+    copy(c).then(function(){flash('Code copié. Colle-le dans ta note « Journal de cycle ».')},function(){flash('Copie automatique impossible : sélectionne le code ci-dessous et copie-le.',true)});
+  });
+  $('share').addEventListener('click',function(){
+    var c=encode();$('code').value=c;
+    if(navigator.share){navigator.share({title:'Journal de cycle RECODE',text:c}).catch(function(){})}
+    else{copy(c).then(function(){flash('Partage indisponible ici : code copié, colle-le dans tes notes.')})}
+  });
+  $('restore').addEventListener('click',function(){
+    var raw=$('code').value.trim(),i=raw.indexOf('RECODE-CYCLE:');
+    if(i<0){flash('Code non reconnu. Il doit commencer par RECODE-CYCLE:',true);return}
+    try{
+      var b=raw.slice(i+13).split(/\s/)[0];
+      var d=JSON.parse(decodeURIComponent(escape(atob(b))));
+      if(!d||!Array.isArray(d.cycles))throw 0;
+      state={age:d.age||'26',cycles:d.cycles};persist();render();
+      flash('Journal restauré : '+state.cycles.length+' cycle'+(state.cycles.length>1?'s':'')+'.');
+    }catch(e){flash('Code incomplet ou abîmé. Recopie-le en entier depuis ta note.',true)}
+  });
+
+  load();render();
+})();
+</script>
+</body>
+</html>
